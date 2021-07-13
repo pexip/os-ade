@@ -1,0 +1,3 @@
+usr/include
+usr/lib/${DEB_HOST_MULTIARCH}/libade.so
+usr/lib/${DEB_HOST_MULTIARCH}/cmake/ade/*.cmake
