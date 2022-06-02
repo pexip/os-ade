@@ -1,3 +1,9 @@
+ade (0.1.1f-0pexip2) pexip; urgency=medium
+
+  * Initial bullseye build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 02 Jun 2022 14:41:59 +0100
+
 ade (0.1.1f-0pexip1) pexip; urgency=medium
 
   * Initial release
