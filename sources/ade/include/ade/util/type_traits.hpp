@@ -11,6 +11,13 @@
 
 #include <type_traits>
 
+// NB: Had to write it like this due to MSVC warning C4067
+#if defined(__has_include)
+#if __has_include(<version>)
+#  include <version>
+#endif
+#endif
+
 namespace ade
 {
 namespace util
@@ -56,6 +63,13 @@ struct and_<T0, T...> : and_< T0, and_<T...> > {};
 template<typename T, typename ...Ts>
 struct is_one_of : or_< std::is_same<T,Ts>... > {};
 
+template <typename T>
+struct is_pod : std::integral_constant
+<
+    bool,
+    std::is_trivial<T>::value && std::is_standard_layout<T>::value
+> {};
+
 template<bool v>
 using enable_b_t = typename std::enable_if< v, bool >::type;
 
@@ -83,9 +97,13 @@ using conditional_t = typename std::conditional<B,T,F>::type;
 template<typename... Types>
 using common_type_t = typename std::common_type<Types...>::type;
 
-template<class T>
-using result_of_t = typename std::result_of<T>::type;
-
+#ifdef __cpp_lib_is_invocable
+    template<class T, typename ...Args>
+    using result_of_t = std::invoke_result_t<T, Args...>;
+#else
+    template<class T, typename ...Args>
+    using result_of_t = typename std::result_of<T(Args...)>::type;
+#endif
 } // namespace util
 } // namespace ade
 

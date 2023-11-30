@@ -9,6 +9,7 @@
 #ifndef ADE_TYPED_GRAPH_HPP
 #define ADE_TYPED_GRAPH_HPP
 
+#include <cstdint>
 #include <unordered_set>
 #include <string>
 
@@ -125,6 +126,14 @@ public:
         initIds();
     }
 
+    // explicitly define copy-constructor since we modify operator=
+    ConstTypedGraph(const ConstTypedGraph<Types...>& other):
+        m_srcGraph(other.m_srcGraph)
+    {
+        details::checkUniqueNames<Types...>();
+        initIds();
+    }
+
     template<typename... OtherTypes>
     ConstTypedGraph(const ConstTypedGraph<OtherTypes...>& other):
         m_srcGraph(other.m_srcGraph)
@@ -171,6 +180,12 @@ public:
     using MetadataT  = ade::TypedMetadata<false, Types...>;
 
     TypedGraph(ade::Graph& graph):
+        ConstTypedGraph<Types...>(graph)
+    {
+    }
+
+    // explicitly define copy-constructor since we modify operator=
+    TypedGraph(TypedGraph& graph):
         ConstTypedGraph<Types...>(graph)
     {
     }

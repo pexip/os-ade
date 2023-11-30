@@ -4,14 +4,21 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.5)
 
 project(ade)
+
+if(POLICY CMP0063)
+    cmake_policy(SET CMP0063 NEW)
+endif()
 
 option(ENABLE_ADE_TESTING      "Build tests, require google test" OFF)
 option(BUILD_ADE_TUTORIAL      "Build tutorial samples"           OFF)
 option(FORCE_ADE_ASSERTS       "Always enable ADE_ASSERT"         OFF)
 option(BUILD_ADE_DOCUMENTATION "Build doxygen documentation"      OFF)
+option(BUILD_WITH_STATIC_CRT   "Build with static multi-threaded C Runtime (MS Windows/Visual Studio only)" OFF)
+
+set(CMAKE_CXX_STANDARD 11)
 
 # TODO: this is horrible hack, we must follow cmake
 # build/install policy
@@ -32,15 +39,21 @@ function(add_security_flags target)
             target_compile_options( ${target} PRIVATE -fstack-protector-strong)
         endif()
     elseif(WIN32)
-        target_compile_options( ${target} PRIVATE /GS /DynamicBase)
-        if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
-            # These options for 32 bit builds only
-            target_compile_options( ${target} PRIVATE /SAFESEH /NXCOMPAT )
+        if( ${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
+            target_compile_options( ${target} PRIVATE /GS /DynamicBase)
+            if(BUILD_WITH_STATIC_CRT)
+                target_compile_options( ${target} PRIVATE "/MT")
+            endif()
+            if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
+                # These options for 32 bit builds only
+                target_compile_options( ${target} PRIVATE /SAFESEH /NXCOMPAT )
+            endif()
+        elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+            target_compile_definitions( ${target} PRIVATE _FORTIFY_SOURCE=2 )
+            target_compile_options( ${target} PRIVATE -fstack-protector-strong )
         endif()
     endif()
 endfunction()
-
-set(CMAKE_CXX_STANDARD 11)
 
 if (MSVC)
     add_definitions(-D_SCL_SECURE_NO_WARNINGS)
