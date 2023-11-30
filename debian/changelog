@@ -1,3 +1,9 @@
+ade (0.1.2d-0pexip0) pexip-bookworm; urgency=medium
+
+  * Import new upstream.
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 30 Nov 2023 15:44:19 +0000
+
 ade (0.1.1f-0pexip5) pexip-bookworm; urgency=medium
 
   * Initial bookworm build
