@@ -1,3 +1,9 @@
+ade (0.1.2d-0+pexip24u2) pexip-bookworm; urgency=medium
+
+  * New versioning scheme
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 01 Feb 2024 15:50:57 +0000
+
 ade (0.1.2d-0pexip1) pexip-bookworm; urgency=medium
 
   * Bookworm build for product distribution
