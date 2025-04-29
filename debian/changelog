@@ -1,3 +1,9 @@
+ade (0.1.2d-0+pexip25u1) pexip-trixie; urgency=medium
+
+  * Initial trixie build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Tue, 29 Apr 2025 22:27:04 +0100
+
 ade (0.1.2d-0+pexip24u2) pexip-bookworm; urgency=medium
 
   * New versioning scheme
