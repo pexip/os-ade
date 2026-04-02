@@ -1,3 +1,8 @@
+Enable building and installing ade as a shared library instead of only static.
+
+This improves our security posture as we can update ADE without having to
+rebuild every library / application which links to it.  It should really be the
+default upstream.
 Index: os-ade/sources/ade/CMakeLists.txt
 ===================================================================
 --- os-ade.orig/sources/ade/CMakeLists.txt
