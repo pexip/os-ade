@@ -12,6 +12,9 @@ Vcs-Git: https://github.com/opencv/ade.git
 Description: ADE Framework
  ADE Framework is a graph construction, manipulation, and processing framework.
  ADE Framework is suitable for organizing data flow processing and execution.
+X-Pexip-Note: The PexOS ADE package is not derived from Debian, it is drectly
+ based on the upstream release..  We therefore add Debian packaging and ensure
+ that a shared library is built.
 
 Package: libade-dev
 Architecture: any
